@@ -1,0 +1,19 @@
+# dependencies
+node_modules
+.next
+dist
+
+# env and config
+.env*
+*.local
+
+# logs
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Docker stuff
+Dockerfile
+docker-compose*
