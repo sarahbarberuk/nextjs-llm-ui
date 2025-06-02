@@ -1,31 +1,33 @@
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+
 export async function fetchSummarize(prompt: string): Promise<string> {
-  const res = await fetch("http://localhost:8000/summarize/", {
+  const res = await fetch(`${baseUrl}/summarize/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt }),
   });
 
+  const body = await res.json();
+
   if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.detail || "Failed to fetch summary");
+    throw new Error(body.detail || "Failed to fetch summary");
   }
 
-  const data = await res.json();
-  return data.summary;
+  return body.summary;
 }
 
 export async function fetchRewrite(prompt: string): Promise<string> {
-  const res = await fetch("http://localhost:8000/rewrite/", {
+  const res = await fetch(`${baseUrl}/rewrite/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt }), // assuming the rewrite endpoint uses the same key
   });
 
+  const body = await res.json();
+
   if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.detail || "Failed to fetch rewrite");
+    throw new Error(body.detail || "Failed to fetch rewrite");
   }
 
-  const data = await res.json();
-  return data.rewritten; // or data.result, depending on your actual API response
+  return body.rewritten;
 }
